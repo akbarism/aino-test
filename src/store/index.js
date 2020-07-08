@@ -3,7 +3,6 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 import axios from "axios";
-// import { resolve } from "core-js/fn/promise";
 export default new Vuex.Store({
   state: {
     allMenu: [],
@@ -34,6 +33,15 @@ export default new Vuex.Store({
         item => item.data.id === data.data.id
       );
       if (!items) {
+        state.selectedMenu.push(data);
+      }
+    },
+    SELECTED_TWO(state, data) {
+      const items = state.selectedMenu.find(
+        item => item.data.id === data.data.id
+      );
+      if (!items) {
+        document.querySelector(".fix-add").style.display = "none";
         state.selectedMenu.push(data);
       }
     },
@@ -87,13 +95,13 @@ export default new Vuex.Store({
     },
     TEST(state) {
       let a1 = state.allMenu;
+      console.log(state.allMenu);
       let a2 = state.allCategory;
       const hash = new Map();
       a1.concat(a2).forEach(function(obj) {
         hash.set(obj.id, Object.assign(hash.get(obj.id) || {}, obj));
       });
       state.storage = Array.from(hash.values());
-      console.log(state.storage);
     }
   },
   actions: {

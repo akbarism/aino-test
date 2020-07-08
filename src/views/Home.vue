@@ -55,13 +55,14 @@
                 <button class="btn-add" @click="pick(item)">
                   Add to Chart
                 </button>
-                <section class="for-count">
-                  <div class="box">
-                    <button>-</button>
-                    <input type="text" />
-                    <button>+</button>
-                  </div>
-                </section>
+                <button class="fix-add" @click="select(item)">
+                  Add to Chart
+                </button>
+                <div class="box">
+                  <button class="btn-pls">-</button>
+                  <input type="text" />
+                  <button class="btn-pls">+</button>
+                </div>
               </div>
             </div>
           </div>
@@ -107,6 +108,10 @@ export default {
   methods: {
     pick(data) {
       this.$store.commit("SELECTED", { data, count: 1 });
+    },
+    select(data) {
+      this.$store.commit("SELECTED_TWO", { data, count: 1 });
+      document.querySelector(".box").style.display = " flex";
     },
     food() {
       document.querySelector(".category-menu").classList.add("none");
@@ -297,9 +302,9 @@ export default {
                 border-radius: 8px;
                 color: #ffffff;
               }
-            }
-            .for-count {
-              display: none;
+              .fix-add {
+                display: none;
+              }
             }
           }
         }
@@ -354,21 +359,29 @@ export default {
               .add {
                 flex-direction: column;
                 .btn-add {
-                  padding: 6px;
+                  display: none;
                 }
-                .for-count {
-                  height: 36px;
+                .fix-add {
+                  display: block;
                   width: 100%;
-                  background: white;
-                  padding: 6px;
+                  border: none;
+                  background: #71bf77;
+                  padding: 10px 0;
                   border-radius: 8px;
-                  z-index: 2;
-                  margin-top: -36px;
-                  .box {
-                    display: flex;
-                    input {
-                      width: 20px;
-                    }
+                  color: #ffffff;
+                }
+                .box {
+                  display: none;
+                  justify-content: center;
+                  align-items: center;
+                  height: 30px;
+                  .btn-pls {
+                    border: none;
+                    width: 20px;
+                  }
+                  input {
+                    width: 20px;
+                    border: none;
                   }
                 }
               }
