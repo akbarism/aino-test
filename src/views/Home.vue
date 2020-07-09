@@ -302,6 +302,9 @@ export default {
                 border-radius: 8px;
                 color: #ffffff;
               }
+              .box {
+                display: none;
+              }
               .fix-add {
                 display: none;
               }
