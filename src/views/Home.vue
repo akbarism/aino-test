@@ -26,8 +26,17 @@
           </section>
         </aside>
         <subCategory />
-        <div class="main left">
-          <div class="item" v-for="item in allMenu.data" :key="item.id">
+        <div v-if="displayMenu.length === 0" class="unav">
+          <img
+            src="../assets/auth.svg"
+            alt="cover"
+            width="400px"
+            height="400px"
+          />
+          <h1>Menu not available</h1>
+        </div>
+        <div class="main left" v-else>
+          <div class="item" v-for="item in displayMenu" :key="item.id">
             <div class="image">
               <img :src="item.imageUrl" alt="menu" />
             </div>
@@ -94,7 +103,7 @@ import Cart from "../components/Cart.vue";
 export default {
   name: "Home",
   computed: {
-    ...mapState(["allMenu", "total", "totalQty", "selectedMenu", "storage"])
+    ...mapState(["displayMenu", "total", "totalQty", "selectedMenu", "storage"])
   },
   components: {
     subCategory,
@@ -103,7 +112,10 @@ export default {
   mounted() {
     this.$store.dispatch("getMenu");
     this.$store.dispatch("getCategory");
-    this.test();
+    this.MENU();
+    setTimeout(() => {
+      this.$store.commit("apa");
+    }, 4000);
   },
   methods: {
     pick(data) {
@@ -126,9 +138,12 @@ export default {
     swipe() {
       document.querySelector(".side-bar").classList.toggle("swap");
       document.querySelector(".main").classList.toggle("left");
+      document.querySelector(".category-menu").classList.add("none");
+      document.querySelector(".category").classList.add("bg");
+      document.querySelector(".food").classList.add("bg-1");
     },
-    test() {
-      this.$store.commit("TEST");
+    MENU() {
+      this.$store.commit("GET_MENU");
     },
     Logout() {
       delete localStorage.id;
@@ -158,6 +173,7 @@ export default {
     padding: 10px;
     img {
       margin-left: 10px;
+      cursor: pointer;
     }
     .refresh {
       display: flex;
@@ -169,6 +185,7 @@ export default {
       background: #71bf77;
       border-radius: 5px;
       border: none;
+      cursor: pointer;
     }
   }
   .bellow {
@@ -193,6 +210,7 @@ export default {
           background: #ffffff;
           font-size: 40px;
           color: black;
+          cursor: pointer;
         }
         .bg-1 {
           background: #71bf77;
@@ -207,6 +225,7 @@ export default {
           background: #43557c;
           color: #ffffff;
           font-size: 40px;
+          cursor: pointer;
         }
         .bg {
           color: black;
@@ -229,6 +248,10 @@ export default {
       .none {
         display: none;
         background: #43557c;
+      }
+      .unav {
+        width: 600px;
+        height: 600px;
       }
       .main {
         flex-wrap: wrap;
@@ -303,7 +326,9 @@ export default {
                 color: #ffffff;
               }
               .box {
+                position: relative;
                 display: none;
+                width: 0;
               }
               .fix-add {
                 display: none;

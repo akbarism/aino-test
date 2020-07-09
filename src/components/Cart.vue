@@ -52,12 +52,6 @@ import { mapState } from "vuex";
 
 export default {
   name: "Chart",
-  //   data() {
-  //     return {
-  //       total: 0,
-  //       totalQty: 0
-  //     };
-  //   },
   computed: {
     ...mapState(["selectedMenu", "total", "totalQty"])
   },

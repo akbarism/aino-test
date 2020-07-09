@@ -6,15 +6,15 @@ import axios from "axios";
 export default new Vuex.Store({
   state: {
     allMenu: [],
-    selectedMenu: [],
     allCategory: [],
-    selectCategory: [],
-    storage: [],
+    selectedMenu: [],
     msg: "",
     token: localStorage.getItem("token") || null,
     mainTotal: [],
     total: 0,
-    totalQty: 0
+    totalQty: 0,
+    tampung: [],
+    displayMenu: []
   },
   getters: {
     getUser(state) {
@@ -24,6 +24,13 @@ export default new Vuex.Store({
   mutations: {
     GET_MENU(state, data) {
       state.allMenu = data;
+      state.displayMenu = data.data;
+    },
+    SORT_BY(state, id) {
+      state.displayMenu = state.allMenu.data.filter(item => {
+        return item.merchant.outlet.category.id == id;
+      });
+      console.log(state.tampung);
     },
     GET_CATEGORY(state, data) {
       state.allCategory = data;
@@ -43,15 +50,6 @@ export default new Vuex.Store({
       if (!items) {
         document.querySelector(".fix-add").style.display = "none";
         state.selectedMenu.push(data);
-      }
-    },
-    SELECT_CATEGORY(state, data) {
-      const items = state.selectCategory.find(
-        category => category.id === data.id
-      );
-      if (!items) {
-        state.selectCategory.push(data);
-        console.log(data);
       }
     },
     INCREMENT(state, data) {
@@ -92,16 +90,6 @@ export default new Vuex.Store({
       } else if (state.selectedMenu == 0) {
         state.totalQty = 0;
       }
-    },
-    TEST(state) {
-      let a1 = state.allMenu;
-      console.log(state.allMenu);
-      let a2 = state.allCategory;
-      const hash = new Map();
-      a1.concat(a2).forEach(function(obj) {
-        hash.set(obj.id, Object.assign(hash.get(obj.id) || {}, obj));
-      });
-      state.storage = Array.from(hash.values());
     }
   },
   actions: {

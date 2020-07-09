@@ -59,7 +59,6 @@ export default {
         .dispatch("isLogin", { email: this.email, password: this.password })
         .then(res => {
           res;
-          console.log(res);
           this.$router.go("/home");
         });
     }

@@ -5,7 +5,7 @@
       class="sub-category"
       v-for="category in allCategory"
       :key="category.id"
-      @click="cate(category)"
+      @click="cate(category.id)"
     >
       <img :src="category.imageUrl" alt="icon" />
       <h5>{{ category.name }}</h5>
@@ -18,12 +18,15 @@ import { mapState } from "vuex";
 
 export default {
   name: "subCategory",
+  data() {
+    return {};
+  },
   computed: {
     ...mapState(["allCategory"])
   },
   methods: {
-    cate(data) {
-      this.$store.commit("SELECT_CATEGORY", data);
+    cate(id) {
+      this.$store.commit("SORT_BY", id);
     }
   }
 };
@@ -46,6 +49,10 @@ export default {
     padding: 10px;
     background: white;
     margin-bottom: 15px;
+    cursor: pointer;
+  }
+  .sub-category:active {
+    transform: scale(0.9);
   }
 }
 @media only screen and (max-width: 600px) {
