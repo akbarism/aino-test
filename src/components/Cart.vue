@@ -29,9 +29,9 @@
               <p>{{ item.data.name }}</p>
             </section>
             <section class="cntr">
-              <button @click="decrement">-</button>
+              <button @click="decrement(item)">-</button>
               <input type="text" v-model="item.count" @change="canotNull" />
-              <button @click="increment">+</button>
+              <button @click="increment(item)">+</button>
             </section>
           </div>
           <div class="price">

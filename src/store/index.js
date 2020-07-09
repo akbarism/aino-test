@@ -13,7 +13,6 @@ export default new Vuex.Store({
     mainTotal: [],
     total: 0,
     totalQty: 0,
-    tampung: [],
     displayMenu: []
   },
   getters: {
@@ -50,17 +49,21 @@ export default new Vuex.Store({
       if (!items) {
         document.querySelector(".fix-add").style.display = "none";
         state.selectedMenu.push(data);
+        console.log(data);
       }
     },
     INCREMENT(state, data) {
-      let items = state.selectedMenu.find(item => item.id === data.id);
+      let items = state.selectedMenu.find(
+        item => item.data.id === data.data.id
+      );
       if (items) {
         items.count += 1;
+        console.log(items);
       }
     },
     DECREMENT(state, data) {
       let items = state.selectedMenu.find(
-        item => item.id_menu === data.id_menu
+        item => item.data.id === data.data.id
       );
       if (items) {
         if (items.count <= 1) {

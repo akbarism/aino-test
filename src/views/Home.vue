@@ -26,17 +26,17 @@
           </section>
         </aside>
         <subCategory />
-        <div v-if="displayMenu.length === 0" class="unav">
-          <img
-            src="../assets/auth.svg"
-            alt="cover"
-            width="400px"
-            height="400px"
-          />
-          <h1>Menu not available</h1>
-        </div>
-        <div class="main left" v-else>
-          <div class="item" v-for="item in displayMenu" :key="item.id">
+        <div class="main left">
+          <div v-if="displayMenu.length === 0" class="unav">
+            <img
+              src="../assets/auth.svg"
+              alt="cover"
+              width="400px"
+              height="400px"
+            />
+            <h1>Menu not available</h1>
+          </div>
+          <div class="item" v-else v-for="item in displayMenu" :key="item.id">
             <div class="image">
               <img :src="item.imageUrl" alt="menu" />
             </div>
@@ -112,10 +112,6 @@ export default {
   mounted() {
     this.$store.dispatch("getMenu");
     this.$store.dispatch("getCategory");
-    this.MENU();
-    setTimeout(() => {
-      this.$store.commit("apa");
-    }, 4000);
   },
   methods: {
     pick(data) {
@@ -252,6 +248,7 @@ export default {
       .unav {
         width: 600px;
         height: 600px;
+        margin-left: 350px;
       }
       .main {
         flex-wrap: wrap;
