@@ -9,7 +9,7 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/home",
+    path: "/",
     name: "Home",
     component: Home,
     meta: { requiresAuth: true }
@@ -57,7 +57,7 @@ axios.interceptors.response.use(
       if (!isRefreshing) {
         isRefreshing = true;
         store
-          .dispatch("REFRESH_TOKEN")
+          .dispatch("refresh_token")
           .then(({ status }) => {
             if (status === 200 || status == 204) {
               isRefreshing = false;
@@ -104,7 +104,7 @@ router.beforeEach((to, from, next) => {
   } else if (to.matched.some(record => record.meta.requiresVisitor)) {
     if (store.getters.getUser) {
       next({
-        path: "/home"
+        path: "/"
       });
     } else {
       next();

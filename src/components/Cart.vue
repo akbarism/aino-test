@@ -1,8 +1,13 @@
 <template>
   <div class="side-right">
     <header class="count">
-      <h5>Cart</h5>
-      <div class="square text-light">{{ totalQty }}</div>
+      <div class="d-flex">
+        <h5>Cart</h5>
+        <div class="square text-light">{{ totalQty }}</div>
+      </div>
+      <button v-if="selectedMenu.length === 1" @click="checkout">
+        Checkout
+      </button>
     </header>
     <div class="empty-chart" v-if="selectedMenu.length === 0">
       <img
@@ -49,6 +54,7 @@
 
 <script>
 import { mapState } from "vuex";
+import Swal from "sweetalert2";
 
 export default {
   name: "Chart",
@@ -69,6 +75,14 @@ export default {
       if (item.count < 1) {
         item.count = 1;
       }
+    },
+    checkout() {
+      Swal.fire({
+        title: "Order Succes",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 2200
+      });
     }
   },
   updated() {
@@ -89,9 +103,10 @@ export default {
   margin-top: 70px;
   .count {
     display: flex;
+    justify-content: space-between;
     width: 100%;
     height: 70px;
-    padding: 20px;
+    padding: 17px;
     .square {
       display: flex;
       align-items: center;
@@ -101,6 +116,13 @@ export default {
       background: #e68e74;
       border-radius: 5px;
       margin-left: 5px;
+    }
+    button {
+      border: none;
+      padding: 7px;
+      border-radius: 5px;
+      background: #71bf77;
+      color: white;
     }
   }
   .empty-chart {
@@ -116,6 +138,7 @@ export default {
     width: 100%;
     height: 400px;
     padding: 0 20px;
+    overflow-y: scroll;
     .item {
       width: 100%;
       height: 90px;
@@ -176,5 +199,18 @@ export default {
   .side-right {
     display: none;
   }
+}
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #43557c;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #324570;
 }
 </style>

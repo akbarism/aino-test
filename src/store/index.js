@@ -18,6 +18,9 @@ export default new Vuex.Store({
   getters: {
     getUser(state) {
       return state.token !== null;
+    },
+    isSelected(state, data) {
+      state.selectedMenu.find(item => item.data.id === data.data.id);
     }
   },
   mutations: {
@@ -40,16 +43,6 @@ export default new Vuex.Store({
       );
       if (!items) {
         state.selectedMenu.push(data);
-      }
-    },
-    SELECTED_TWO(state, data) {
-      const items = state.selectedMenu.find(
-        item => item.data.id === data.data.id
-      );
-      if (!items) {
-        document.querySelector(".fix-add").style.display = "none";
-        state.selectedMenu.push(data);
-        console.log(data);
       }
     },
     INCREMENT(state, data) {
@@ -99,7 +92,7 @@ export default new Vuex.Store({
     getMenu(context) {
       axios
         .get(
-          "https://private-d4ec81-retailmockapp.apiary-mock.com/merchant/2/outlet/1/category/56/product?page=1&limit=10&active=true"
+          "https://private-d4ec81-retailmockapp.apiary-mock.com/merchant/2/outlet/1/category/56/product?page=1&limit=10&active=true", {}
         )
         .then(res => {
           context.commit("GET_MENU", res.data.data);

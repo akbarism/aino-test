@@ -59,7 +59,7 @@ export default {
         .dispatch("isLogin", { email: this.email, password: this.password })
         .then(res => {
           res;
-          this.$router.go("/home");
+          this.$router.go("/");
         });
     }
   }
